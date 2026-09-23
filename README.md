@@ -7,8 +7,9 @@ We'll use a collection of anime that can be saved as favorite in which we'll use
 This is are way of giving back to the community that we grew up in and have had maany good moments with, just another way to connect with such favorites in your life.
 
 ## Teamates
-s4mmywils0n : Sever & Stack Setup/ configuring database / API set up
-Cy-EF0510 : Template configuration / 
+- s4mmywils0n : Sever & Stack Setup/ configuring database / API set up
+
+- Cy-EF0510 : Template configuration / 
 
 ## Tech Stack
 we are using PHP for our web app development, as well as Docker for our vm and MYSQL for our database
