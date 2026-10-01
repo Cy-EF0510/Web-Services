@@ -9,7 +9,7 @@ This is are way of giving back to the community that we grew up in and have had 
 ## Teamates
 - s4mmywils0n : Sever & Stack Setup/ configuring database / API set up
 
-- Cy-EF0510 : Template configuration / 
+- Cy-EF0510 : Template configuration / Securing Endpoints / Implementing Product Service / User Entity / Spring Boot project skeleton
 
 ## Tech Stack
 we are using PHP for our web app development, as well as Docker for our vm and MYSQL for our database
