@@ -22,6 +22,9 @@ paths:
         - Anime
       summary: Get all anime
       operationId: getAnimeList
+      parameters:
+        - $ref: "#/components/parameters/Page"
+        - $ref: "#/components/parameters/Limit"
       responses:
         "200":
           description: List of anime records
@@ -31,6 +34,12 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/Anime"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "406":
+          $ref: "#/components/responses/NotAcceptable"
 
     post:
       tags:
@@ -52,6 +61,12 @@ paths:
                 $ref: "#/components/schemas/Anime"
         "400":
           $ref: "#/components/responses/BadRequest"
+        "406":
+          $ref: "#/components/responses/NotAcceptable"
+        "415":
+          $ref: "#/components/responses/UnsupportedMediaType"
+        "422":
+          $ref: "#/components/responses/UnprocessableEntity"
         "500":
           $ref: "#/components/responses/ServerError"
 
@@ -73,6 +88,8 @@ paths:
                 $ref: "#/components/schemas/Anime"
         "404":
           $ref: "#/components/responses/NotFound"
+        "406":
+          $ref: "#/components/responses/NotAcceptable"
 
     put:
       tags:
@@ -96,6 +113,12 @@ paths:
           $ref: "#/components/responses/BadRequest"
         "404":
           $ref: "#/components/responses/NotFound"
+        "406":
+          $ref: "#/components/responses/NotAcceptable"
+        "415":
+          $ref: "#/components/responses/UnsupportedMediaType"
+        "422":
+          $ref: "#/components/responses/UnprocessableEntity"
 
     patch:
       tags:
@@ -119,6 +142,12 @@ paths:
           $ref: "#/components/responses/BadRequest"
         "404":
           $ref: "#/components/responses/NotFound"
+        "406":
+          $ref: "#/components/responses/NotAcceptable"
+        "415":
+          $ref: "#/components/responses/UnsupportedMediaType"
+        "422":
+          $ref: "#/components/responses/UnprocessableEntity"
 
     delete:
       tags:
@@ -130,6 +159,8 @@ paths:
           description: Anime record deleted
         "404":
           $ref: "#/components/responses/NotFound"
+        "406":
+          $ref: "#/components/responses/NotAcceptable"
 
   /manga:
     get:
@@ -137,6 +168,9 @@ paths:
         - Manga
       summary: Get all manga
       operationId: getMangaList
+      parameters:
+        - $ref: "#/components/parameters/Page"
+        - $ref: "#/components/parameters/Limit"
       responses:
         "200":
           description: List of manga records
@@ -146,6 +180,12 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/Manga"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "406":
+          $ref: "#/components/responses/NotAcceptable"
 
     post:
       tags:
@@ -167,6 +207,12 @@ paths:
                 $ref: "#/components/schemas/Manga"
         "400":
           $ref: "#/components/responses/BadRequest"
+        "406":
+          $ref: "#/components/responses/NotAcceptable"
+        "415":
+          $ref: "#/components/responses/UnsupportedMediaType"
+        "422":
+          $ref: "#/components/responses/UnprocessableEntity"
         "500":
           $ref: "#/components/responses/ServerError"
 
@@ -188,6 +234,8 @@ paths:
                 $ref: "#/components/schemas/Manga"
         "404":
           $ref: "#/components/responses/NotFound"
+        "406":
+          $ref: "#/components/responses/NotAcceptable"
 
     put:
       tags:
@@ -211,6 +259,12 @@ paths:
           $ref: "#/components/responses/BadRequest"
         "404":
           $ref: "#/components/responses/NotFound"
+        "406":
+          $ref: "#/components/responses/NotAcceptable"
+        "415":
+          $ref: "#/components/responses/UnsupportedMediaType"
+        "422":
+          $ref: "#/components/responses/UnprocessableEntity"
 
     patch:
       tags:
@@ -234,6 +288,12 @@ paths:
           $ref: "#/components/responses/BadRequest"
         "404":
           $ref: "#/components/responses/NotFound"
+        "406":
+          $ref: "#/components/responses/NotAcceptable"
+        "415":
+          $ref: "#/components/responses/UnsupportedMediaType"
+        "422":
+          $ref: "#/components/responses/UnprocessableEntity"
 
     delete:
       tags:
@@ -245,6 +305,8 @@ paths:
           description: Manga record deleted
         "404":
           $ref: "#/components/responses/NotFound"
+        "406":
+          $ref: "#/components/responses/NotAcceptable"
 
 components:
   parameters:
@@ -256,6 +318,25 @@ components:
       schema:
         type: integer
         minimum: 1
+
+    Page:
+      name: page
+      in: query
+      description: 1-based page number
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+
+    Limit:
+      name: limit
+      in: query
+      description: Number of items per page (max 100)
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 20
 
   schemas:
     Anime:
@@ -472,19 +553,34 @@ components:
       description: Invalid request or input
       content:
         application/json:
-          schema:
-            $ref: "#/components/schemas/Error"
+          schema: { $ref: "#/components/schemas/Error" }
 
     NotFound:
       description: Record or endpoint not found
       content:
         application/json:
-          schema:
-            $ref: "#/components/schemas/Error"
+          schema: { $ref: "#/components/schemas/Error" }
+
+    NotAcceptable:
+      description: The Accept header does not allow application/json
+      content:
+        application/json:
+          schema: { $ref: "#/components/schemas/Error" }
+
+    UnsupportedMediaType:
+      description: Content-Type must be application/json on requests with a body
+      content:
+        application/json:
+          schema: { $ref: "#/components/schemas/Error" }
+
+    UnprocessableEntity:
+      description: Request body failed validation
+      content:
+        application/json:
+          schema: { $ref: "#/components/schemas/Error" }
 
     ServerError:
       description: Internal server or database error
       content:
         application/json:
-          schema:
-            $ref: "#/components/schemas/Error"
+          schema: { $ref: "#/components/schemas/Error" }
