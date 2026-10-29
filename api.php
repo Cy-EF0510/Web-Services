@@ -14,6 +14,9 @@ $options = [
     PDO::ATTR_EMULATE_PREPARES => false,
 ];
 
+
+aniurl = 
+
 // 2. Configure API headers
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
@@ -24,6 +27,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(204);
     exit;
 }
+
+//connect to the anime API
+
 
 // 3. Connect to the database
 try {
@@ -37,6 +43,8 @@ try {
 // 4. Identify the HTTP method and URI
 $method = $_SERVER['REQUEST_METHOD'];
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+
+aniuri = parse_url($_SERVER['REQUEST_URI'],https://api.jikan.moe/v4/top/anime)
 
 // Base path: /Web-Services/api.php
 $apiPosition = strpos($uri, '/Web-Services/api.php');
@@ -75,7 +83,7 @@ $resources = [
     ]
 ];
 
-// 6. Match the requested endpoint
+// 6. Match the requested endpoint (filter)
 if (!preg_match('#^/(anime|manga)(?:/([0-9]+))?/?$#', $path, $matches)) {
     http_response_code(404);
     echo json_encode(["error" => "Endpoint not found"]);
