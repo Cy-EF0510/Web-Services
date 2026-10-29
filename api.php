@@ -44,7 +44,7 @@ try {
 $method = $_SERVER['REQUEST_METHOD'];
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
-aniuri = parse_url($_SERVER['REQUEST_URI'],https://api.jikan.moe/v4/top/anime)
+aniuri = parse_url($_SERVER['REQUEST_URI'],https://api.jikan.moe/v4/top/anime);
 
 // Base path: /Web-Services/api.php
 $apiPosition = strpos($uri, '/Web-Services/api.php');
