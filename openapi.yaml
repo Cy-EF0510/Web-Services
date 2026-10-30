@@ -583,5 +583,4 @@ components:
       description: Internal server or database error
       content:
         application/json:
-          schema:
-            $ref: "#/components/schemas/Error"
+          schema: { $ref: "#/components/schemas/Error" }
