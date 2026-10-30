@@ -1,3 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+  
+</body>
+</html>
+
 <?php 
 
 //1. so basically fetch all the api from tyhe anime api and put it on the db at least like 500 but for the trending fetch it from the api live 
@@ -21,31 +33,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 }
 
 $ch = curl_init("https://api.jikan.moe/v4/top/anime");
-var $anime_;
-
-if(file_exists($ch))
-{
-  $anime_= file_get_contents($ch);
-}
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+$anime_ = curl_exec($ch);
+$httpCode = curl_getinfo($ch,CURLINFO_HTTP_CODE);
+$curlErr = curl_error($ch);
+curl_close($ch);
 
 if($anime_ === FALSE)
     {
-        die('errror occured while fecthing data');
+        http_response_code(502);
+        echo json_encode(['error' => 'cUrl Failed', 'detail'=> $curlErr]);
+        exit;
     }
 
-$message = echo "Url is wrong or cannot connect for some reason";
+ echo "Url is wrong or cannot connect for some reason";
 
-$response = json_decode($anime_, true);     
+$response = json_decode($anime_, true); 
+
+//Next time use $a= $response[data][num];
+
+echo json_encode([
+'status' => 'ok',
+'anime_id' => $response['data'][0]["mal_id"]??null,
+'url' => $response['data'][0]["url"] ?? null ,
+'title' => $response['data'][0]["title"] ?? null,
+], JSON_PRETTY_PRINT);
 
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    
-</body>
-</html>
