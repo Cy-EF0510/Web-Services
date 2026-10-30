@@ -1,5 +1,15 @@
 <?php 
 
+//1. so basically fetch all the api from tyhe anime api and put it on the db at least like 500 but for the trending fetch it from the api live 
+// and if they select it then add it to the db
+
+//so start with fetching the anime into the db if the db has no data in it
+
+//then test with it a bit more then test with the file db then try making it a bit more secure and stricter before working around it on local host 
+
+// try setting up the db too whenever you get the time to do it cy sent you the slim video on disc but if anything still try on railway if u can
+                             
+
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Methods: GET, POST, PUT, PATCH, DELETE, OPTIONS");
@@ -10,20 +20,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit;
 }
 
-$uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+$ch = curl_init("https://api.jikan.moe/v4/top/anime");
+var $anime_;
 
-// Base path: /Web-Services/api.php
-$apiPosition = strpos($uri, '/Web-Services/api.php');
-
-if ($apiPosition === false) {
-    http_response_code(404);
-    echo json_encode(["error" => "Endpoint not found"]);
-    exit;
+if(file_exists($ch))
+{
+  $anime_= file_get_contents($ch);
 }
 
-$path = substr(
-    $uri,
-    $apiPosition + strlen('/Web-Services/api.php')
-);
+if($anime_ === FALSE)
+    {
+        die('errror occured while fecthing data');
+    }
+
+$message = echo "Url is wrong or cannot connect for some reason";
+
+$response = json_decode($anime_, true);     
 
 ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+</html>
